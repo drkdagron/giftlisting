@@ -22,8 +22,15 @@ var UserSchema = new Schema({
         type: String,
         required: "No password entered"
     },
-    salt: {type: String}
+    salt: {type: String},
+    provider: {
+        type: String,
+        required: 'Provider is required'
+    },
+    providerId: String,
+    providerData: {},
 });
+
 
 UserSchema.pre('save', function(next) {
     if (this.password)
@@ -42,3 +49,33 @@ UserSchema.methods.hashPassword = function(password)
 UserSchema.methods.authenticate = function(password) {
     return this.password === this.hashPassword(password);
 };
+
+UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
+    console.log("checking username");
+    var _this = this;
+    var possibleUsername = username + (suffix || '');
+    
+    _this.findOne({
+        username: possibleUsername
+    }, function(err, user) {
+        if (!err) {
+            if (!user) {
+                callback(possibleUsername);
+            } 
+            else {
+                return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
+            }
+        } 
+        else {
+            callback(null);
+        }
+    });
+};
+
+UserSchema.set('toJSON', {
+    getters: true,
+    virtuals: true
+});
+
+
+mongoose.model('User', UserSchema);

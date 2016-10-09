@@ -1,13 +1,12 @@
-var express = require('express');
+process.env.NODE_ENV = process.env.MODE_ENV || 'development';
+
+var express = require('./config/express');
+var mongoose = require('./config/mongoose');
+var passport = require('./config/passport');
+
+var db = mongoose();
 var app = express();
+var passport = passport();
 
-app.set('view engine', 'ejs');
-app.set('views', 'app/views');
-
-app.use(express.static('public'));
-
-app.get('/', function(req, res) {
-    res.send('hello world');
-})
-
-app.listen(3000, function() { console.log("Listening to 3000"); });
+app.listen(3000, function() { console.log("listening"); });
+module.exports = app;
