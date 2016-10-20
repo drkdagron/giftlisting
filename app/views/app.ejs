@@ -3,18 +3,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Gift Listing</title>
         <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/libs/bootstrap-toggle/css/bootstrap2-toggle.css">
+        <script src="/libs/jquery/dist/jquery.js"></script>
+        <script src="/libs/bootstrap-toggle/js/bootstrap2-toggle.js"></script>
         <link rel="stylesheet" href="/css/my.css">
 </head>
 <body>
     <section ng-view>
     </section>
+    <script type="text/javascript">
+        window.user=<%- userFullName ||'null'%>;
+    </script>
 
     <script type="text/javascript" src="/libs/angular/angular.js"></script>
     <script type="text/javascript" src="/libs/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="/libs/angular-resource/angular-resource.js"></script>
 
-
-
     <script type="text/javascript" src="/application.js"></script>
+    <script type="text/javascript" src="/controller/authentication.controller.js"></script>
+    <script type="text/javascript" src="/controller/client.controller.js"></script>
+    <script type="text/javascript" src="/routes/client.routes.js"></script>
+
+
 </body>
 </html>

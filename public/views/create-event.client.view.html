@@ -1,0 +1,31 @@
+<section ng-controller="AppController">
+    <form data-ng-submit="createEvent()">
+        <h2>Create Event</h2>
+        <div>
+            <div data-ng-show="error">
+                <strong data-ng-bind="error"></strong>
+                <br>
+            </div>
+            <div>
+                <div class="container container-table">
+                    <div class="row vertical-center-row">
+                        <div class="text-center col-md-8 col-md-offset-2">
+                                <div class="input-group input-group-lg" style="margin-bottom:10px">
+                                    <span class="input-group-addon " id="sizing-addon1"></span>
+                                    <input type="text" id="name" data-ng-model="name" class="form-control" placeholder="Event Name" aria-describedby="sizing-addon1">
+                                </div>
+                                <div class="input-group input-group-lg" style="margin-bottom:10px">
+                                    <span class="input-group-addon " id="sizing-addon1"></span>
+                                    <input type="text" id="pin" data-ng-model="pin" class="form-control" placeholder="Event Pin" aria-describedby="sizing-addon1">
+                                </div>
+                                <div style="margin-bottom:10px">
+                                    <input type="checkbox" >   Hide Bought Items
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-lg"  value="Create" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

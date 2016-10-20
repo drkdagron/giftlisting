@@ -1,0 +1,28 @@
+<section ng-controller="AppController">
+    <form data-ng-submit="joinEventCall()">
+        <h2>Join Event</h2>
+        <div>
+            <div data-ng-show="error">
+                <strong data-ng-bind="error"></strong>
+                <br>
+            </div>
+            <div>
+                <div class="container container-table">
+                    <div class="row vertical-center-row">
+                        <div class="text-center col-md-8 col-md-offset-2">
+                                <div class="input-group input-group-lg" style="margin-bottom:10px">
+                                    <span class="input-group-addon " id="sizing-addon1"></span>
+                                    <input type="text" id="id" data-ng-model="id" class="form-control" placeholder="Event ID" aria-describedby="sizing-addon1">
+                                </div>
+                                <div class="input-group input-group-lg" style="margin-bottom:10px">
+                                    <span class="input-group-addon " id="sizing-addon1"></span>
+                                    <input type="text" id="pin" data-ng-model="pin" class="form-control" placeholder="Event Pin" aria-describedby="sizing-addon1">
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-lg" value="Join" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

@@ -14,7 +14,7 @@ module.exports = function(app) {
                           failureFlash: true
                       }));
     
-    app.get('/app', function(req, res) { res.render('app'); });
+    app.get('/app', function(req, res) { res.render('app', { userFullName:JSON.stringify(req.user) }); });
 
     //signing out
     app.get('/signout', user.signout);

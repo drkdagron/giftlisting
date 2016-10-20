@@ -6,15 +6,17 @@ var FamilySchema = new Schema({
         type: Date,
         default : Date.now
     },
+    familyName : {
+        type:String,
+        required: "Family Name required"
+    },
     familyID : {
         type: String,
-        required: "ID required"
     },
     familyPin : {
         type: String,
         required: "PIN required"
     },
-    members : {
-        type: [{type:ObjectId, ref: 'User'}],
-    },
 });
+
+mongoose.model('Family', FamilySchema);

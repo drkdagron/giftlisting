@@ -12,7 +12,13 @@ var UserSchema = new Schema({
         trim: true,
         required: "No username entered"
     },
-    name : {
+    firstName : {
+        type: String,
+        trim: true,
+        default: '',
+        required: "No name entered"
+    },
+    lastName : {
         type: String,
         trim: true,
         default: '',
