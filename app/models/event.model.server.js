@@ -25,9 +25,6 @@ var EventSchema = new Schema({
     eventOwner : { 
         type: Schema.Types.ObjectId, ref: 'User'
     },
-    eventOwnerName: {
-        type: String
-    },
     eventName : {
         type:String,
         required: "Event Name required"

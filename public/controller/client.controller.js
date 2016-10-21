@@ -9,7 +9,6 @@ function ($scope, $routeParams, $location, $resource, Authentication) {
 
     $scope.joinEventCall = function()
     {
-        console.log("heyo");
         var api = $resource('/api/event/join');
         var event = new api({
             eventID: this.id,
@@ -17,12 +16,25 @@ function ($scope, $routeParams, $location, $resource, Authentication) {
             eventUser: $scope.authentication.user._id
         });
         console.log(event);
-        console.log("heyo before save");
         event.$save(function(response) {
             $location.path('/');
         });
         console.log("hero after save");
     };
+
+    $scope.testing = function() 
+    {
+        console.log($routeParams);
+        var infoAPI = $resource('/api/event/' + $routeParams.eventId);
+        var info = infoAPI.get({}, function() {
+            $scope.eventinfo = info;
+        });
+    }
+
+    $scope.goToEvent = function(id)
+    {
+        $location.path('/event/' + id);
+    }
 
     $scope.createEvent = function() {
         var evtAPI = $resource('/api/event');
@@ -42,10 +54,11 @@ function ($scope, $routeParams, $location, $resource, Authentication) {
         });
     };
 
-    $scope.getAllEvents = function() {
-        var user = $resource('/api/event');
+    $scope.getMyEvents = function() {
+        var user = $resource('/api/' + $scope.authentication.user._id + '/list');
         var queries = user.query({}, function() {
             $scope.queries = queries;
+            console.log($scope.queries);
         });
     }
 }]);

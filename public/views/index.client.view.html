@@ -1,4 +1,4 @@
-<section ng-controller="AppController" ng-init="getAllEvents()">
+<section ng-controller="AppController" ng-init="getMyEvents()">
         <div>
             <h1 style="font-size:30px;">Please sign in/sign up to begin!</h1>
             <a href="/app#!/event/create"><input type="button" class="btn btn-primary btn-lg" value="Create Event" /></a>
@@ -6,7 +6,10 @@
         </div>
         <div ng-show="queries.length > 0">
             <div ng-repeat="t in queries">
-                {{t.eventName}} - {{t.created}} - {{t.eventOwnerName}}
+                {{t.eventName}} - {{t.created}} - {{t.eventOwner.name}} - <button class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
             </div>
+        </div>
+        <div ng-show="queries.length == 0">
+            Your not in any events.
         </div>
 </section>

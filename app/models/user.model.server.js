@@ -35,11 +35,15 @@ var UserSchema = new Schema({
     },
     providerId: String,
     providerData: {},
+    events: [{
+      type: Schema.ObjectId, ref: 'Event' 
+    }]
 });
 
 
 UserSchema.pre('save', function(next) {
-    if (this.password)
+    console.log("INSIDE PRE SAVE: " + this);
+    if (this.password && this.salt == null)
     {
         this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
         this.password = this.hashPassword(this.password);
@@ -53,6 +57,9 @@ UserSchema.methods.hashPassword = function(password)
 };
 
 UserSchema.methods.authenticate = function(password) {
+    console.log("inside user authenticate message");
+    console.log(this.password);
+    console.log(this.hashPassword(password));
     return this.password === this.hashPassword(password);
 };
 

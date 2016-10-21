@@ -3,9 +3,9 @@ var mongoose = require('mongoose'), Event = mongoose.model('Event'), Item = mong
 //Listing all events (GET)
 exports.list = function(req, res)
 {
-    console.log("listing");
-    Event.find().sort('-created').limit(10).exec(function (err, events){
-        console.log(events[0]);
+    //console.log("listing");
+    Event.find().populate("eventOwner").sort('-created').limit(10).exec(function (err, events){
+        //console.log(events[0]);
         if (err) { return res.status(400).send({message: "I fucked up"});}
         else { res.json(events); }
     });
@@ -13,10 +13,19 @@ exports.list = function(req, res)
 
 exports.listall = function(req, res)
 {
-    console.log("listing");
-    Event.find().sort('-created').exec(function (err, events){
+    //console.log("listing");
+    Event.find().populate("eventOwner").sort('-created').exec(function (err, events){
         if (err) { return res.status(400).send({message: "I fucked up"});}
         else { res.json(events); }
+    });
+}
+
+exports.getMyEvent = function(req, res)
+{
+    User.findOne(req.user._id).populate("events").exec(function(err, user) {
+        if (err) return res.status(400).send({message: err});
+
+        res.json(user.events);
     });
 }
 
@@ -26,16 +35,25 @@ exports.joinEvent = function(req, res)
     //console.log(req.event);
 
     console.log(req.body);
-    Event.findOne({eventID: req.body.eventID, eventPin: req.body.eventPin}).exec(function(err, event) {
+    Event.findOne({eventID: req.body.eventID, eventPin: req.body.eventPin}).populate("eventOwner").exec(function(err, event) {
         if (err) { return res.status(400).send({message: "No :("})}
+        console.log("INSIDE EVENT FUNCTION: " + event);
         if (event != null)
         {
-            User.findById(req.body.eventUser).exec(function(err, user) {
-                user.members.push(event._id);
-                user.save();
-                res.json(user);
+            console.log(event);
+            User.findById(event.eventOwner._id).exec(function(err, user) {
+                user.events.push(event._id);
+                console.log("USER AFTER EVENT PUSH: " + user);
+                user.save(function(err, response) {
+                    if (err) return res.status(400).send({message:"error with user saving: " + err});
+
+                    res.json(user);
+                });
+                
             });
         }
+        //console.log("error");
+        //return res.status(400).send({message: "error"});
     });
 
     //req.user.members.push(req.event._id);

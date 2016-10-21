@@ -17,8 +17,10 @@ module.exports = function(app) {
         .put(event.updateItem);
     app.route('/api/event/join')
         .post(event.joinEvent);
+    app.route('/api/:userId/list')
+        .get(event.getMyEvent);
     
-    //app.param('userId', event.getUser);
+    app.param('userId', event.getUser);
     app.param('eventId', event.eventById);
     app.param('itemId', event.itemById);
 };
