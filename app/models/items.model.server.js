@@ -7,7 +7,7 @@ var ItemSchema = new Schema({
         type: Schema.ObjectId,
         ref : 'User'
     },
-    item : { 
+    itemName : { 
         type:String
     },
     gotten : {

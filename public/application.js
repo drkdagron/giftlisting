@@ -1,6 +1,6 @@
 var appName = "gifttracker";
 
-var mainAppModule = angular.module(appName, ['ngResource', 'ngRoute']);
+var mainAppModule = angular.module(appName, ['ngResource', 'ngRoute', 'angular.filter']);
 
 mainAppModule.config(['$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('!');

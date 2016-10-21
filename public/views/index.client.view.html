@@ -1,15 +1,16 @@
 <section ng-controller="AppController" ng-init="getMyEvents()">
         <div>
-            <h1 style="font-size:30px;">Please sign in/sign up to begin!</h1>
+            <h1 style="font-size:30px;">Test</h1>
             <a href="/app#!/event/create"><input type="button" class="btn btn-primary btn-lg" value="Create Event" /></a>
             <a href="/app#!/event/join"><input type="button" class="btn btn-primary btn-lg" value="Join Event" /></a>
         </div>
         <div ng-show="queries.length > 0">
             <div ng-repeat="t in queries">
-                {{t.eventName}} - {{t.created}} - {{t.eventOwner.name}} - <button class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
+                {{t.eventName}} - {{t.created}} - {{t.eventOwner.name}} - <input class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
             </div>
         </div>
         <div ng-show="queries.length == 0">
             Your not in any events.
         </div>
+        <a href="/signout"><button class="btn btn-danger">Signout</button></a>
 </section>

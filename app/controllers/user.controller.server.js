@@ -57,7 +57,6 @@ exports.signup = function(req, res, next) {
             console.log("USER FOUND: " + found);
             if (found === null)
             {
-                console.log("saving user");
                 user.save(function(err) {
                     if (err) {
                         var message = getErrorMessage(err);
@@ -74,7 +73,6 @@ exports.signup = function(req, res, next) {
             }
             else
             {
-                console.log("user already exists");
                 req.flash('error', "USER ALREADY EXISTS");
                 return res.redirect('/signup');
             }

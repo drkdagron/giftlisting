@@ -31,36 +31,21 @@ exports.getMyEvent = function(req, res)
 
 exports.joinEvent = function(req, res)
 {
-    //console.log(req.user);
-    //console.log(req.event);
-
-    console.log(req.body);
     Event.findOne({eventID: req.body.eventID, eventPin: req.body.eventPin}).populate("eventOwner").exec(function(err, event) {
         if (err) { return res.status(400).send({message: "No :("})}
-        console.log("INSIDE EVENT FUNCTION: " + event);
         if (event != null)
         {
             console.log(event);
-            User.findById(event.eventOwner._id).exec(function(err, user) {
+            User.findById(req.body.eventUser).exec(function(err, user) {
                 user.events.push(event._id);
-                console.log("USER AFTER EVENT PUSH: " + user);
                 user.save(function(err, response) {
                     if (err) return res.status(400).send({message:"error with user saving: " + err});
 
                     res.json(user);
                 });
-                
             });
         }
-        //console.log("error");
-        //return res.status(400).send({message: "error"});
     });
-
-    //req.user.members.push(req.event._id);
-    //req.user.save();
-
-    //console.log("test");
-    //res.send('hello'); 
 }
 exports.getUser = function(req, res, next, id)
 {
@@ -102,14 +87,20 @@ exports.create = function(req, res, next)
     event.save(function (err) {
         if (err) { return res.status(400).send({message: "I fucked up"})}
          
-            res.json(event); 
+        User.findById(req.body.eventOwner).exec(function(err, user) {
+            user.events.push(event._id);
+            user.save(function (err) {
+                if (err) { return res.status(400).send({message: err}); }
+                res.json(event);
+            });
+        });
     });
 }
 
 //Finding a singular event
 exports.eventById = function(req, res, next, id)
 {
-    Event.findById(id).exec(function (err, event) {
+    Event.findById(id).populate('eventItems.owner').exec(function (err, event) {
         if (err) return next(err);
         if (!event) return next(new Error('Failed to load event ' + id));
 

@@ -17,17 +17,68 @@ function ($scope, $routeParams, $location, $resource, Authentication) {
         });
         console.log(event);
         event.$save(function(response) {
+            console.log(response);
             $location.path('/');
+        }, function(err) {
+            console.log(err);
         });
-        console.log("hero after save");
+        
     };
 
-    $scope.testing = function() 
+    $scope.selectUser = function(id)
     {
-        console.log($routeParams);
+        $scope.filterUser = id;
+    }
+    $scope.removeFilter = function()
+    {
+        $scope.filterUser = null;
+        if (angular.isDefined($scope.user.id))
+            delete $scope.user.id;
+    }
+
+    $scope.backToEvents = function()
+    {
+        $location.path('/');
+    }
+
+    $scope.getEvent = function() 
+    {
         var infoAPI = $resource('/api/event/' + $routeParams.eventId);
-        var info = infoAPI.get({}, function() {
+        var info = infoAPI.get({}, function(response) {
+
+            var array = [];
+            for (var i = 0; i < response.eventItems.length; i++)
+            {
+                if (array.indexOf(response.eventItems[i].owner.id) == -1)
+                {
+                    array.push(response.eventItems[i].owner.id);
+                    array.push(i);
+                }
+            }
+            var unique = [];
+            for (var j = 1; j < array.length; j+= 2)
+            {
+                unique.push(response.eventItems[array[j]].owner);
+            }
+            $scope.eventUsers = unique;
             $scope.eventinfo = info;
+            console.log(array);
+        });
+    }
+
+    $scope.addItem = function() 
+    {
+        var itemAPI = $resource('/api/event/' + $routeParams.eventId + '/item');
+        var itemIn = new itemAPI ({
+            owner: $scope.authentication.user._id,
+            itemName: this.itemName,
+            gotten: false
+        });
+        itemIn.$save(function(response) {
+            $scope.getEvent();
+            $scope.itemName = "";
+        }, function(err) {
+            $scope.error = error.data.message;
         });
     }
 

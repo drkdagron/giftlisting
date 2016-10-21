@@ -8,8 +8,10 @@
     <body>
         <div style="height:40%">
         </div>
-        <% if (messages.length > 0) { %>
-        <div class="alert alert-danger"><%= messages %></div>
+        <% for(var i in messages) { %>
+        <div>
+            <p><%= messages[i] %></p>
+        </div>
         <% } %>
             <form action="/signup" method="POST">
                 <div style="width:90%;bottom:0;margin-left:5%">

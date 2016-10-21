@@ -1,4 +1,23 @@
-<section ng-controller="AppController" ng-init="testing()">
+<section ng-controller="AppController" ng-init="getEvent()">
     <h1>VIEWING EVENT</h1>
     <p>{{eventinfo.eventName}}</p>
+    <p>To invite people to this group: <br>ID:{{eventinfo.eventID}} - Pin:{{eventinfo.eventPin}}</p>
+    <div>
+        <select id="userList" ng-model="user.id" ng-change="selectUser(user.id)">
+            <option ng-repeat="u in eventUsers" value="{{u.id}}">{{u.firstName}} {{ u.lastName}}</option>
+        </select>
+        <button ng-show="filterUser != null" class="btn btn-default" ng-click="removeFilter()">Clear Filter
+    </div>
+    <div ng-repeat="r in eventinfo.eventItems" ng-show="filterUser == null">
+        <div>{{r.itemName}} - {{r.owner.firstName}} {{r.owner.lastName}}<span ng-show="r.owner._id != authentication.user._id">- {{r.gotten}}</span><button ng-click="beginEdit(e.index)" ng-show="r.owner._id == authentication.user._id" class="btn btn-success">Edit</button></div>
+    </div>
+    <div ng-repeat="r in eventinfo.eventItems" ng-show="filterUser != null">
+        <div ng-show="r.owner._id == filterUser">{{r.itemName}} - {{r.owner.firstName}} {{r.owner.lastName}}<span ng-show="r.owner._id != authentication.user._id">- {{r.gotten}}</span></div>
+    </div>
+    <form data-ng-submit="addItem()">
+        <input type="text" placeholder="Item Name" data-ng-model="itemName">
+        <input type="submit" value="Add Item" class="btn btn-default">
+    </form>
+
+    <button ng-click="backToEvents()" class="btn btn-danger">Back
 </section>
