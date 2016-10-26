@@ -1,16 +1,22 @@
 <section ng-controller="AppController" ng-init="getMyEvents()">
-        <div>
+        <div style="display:inline-block;top:0;left:0;height:60px;background-color:#253031;width:100%">
+            <p style="height:100%;color:white;font-size:24;float:left">Gift Tracker v0.1</p>
+            <button class="btn btn-default btn-md" style="float:right;margin-top:10px;margin-right:10px;vertical-align:center"><a href="/signout"><strong>Signout</strong></a></button>
+        </div>
+            
+        <div style="position:relative;top:60px">
             <h1 style="font-size:30px;">Test</h1>
-            <a href="/app#!/event/create"><input type="button" class="btn btn-primary btn-lg" value="Create Event" /></a>
-            <a href="/app#!/event/join"><input type="button" class="btn btn-primary btn-lg" value="Join Event" /></a>
+            <a href="/app#!/event/create"><input type="button" class="btn btn-primary btn-md" style="position:relative;left:40%;width:30%;height:40px;top:10px" value="Create Event" /></a>
+            <a href="/app#!/event/join"><input type="button" class="btn btn-primary btn-md" style="position:relative;left:40%;width:27%;height:40px;top:10px" value="Join Event" /></a>   
+            
         </div>
         <div ng-show="queries.length > 0">
             <div ng-repeat="t in queries">
-                {{t.eventName}} - {{t.created}} - {{t.eventOwner.name}} - <input class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
+                {{t.eventName}} - <input class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
             </div>
         </div>
         <div ng-show="queries.length == 0">
             Your not in any events.
         </div>
-        <a href="/signout"><button class="btn btn-danger">Signout</button></a>
+        
 </section>
