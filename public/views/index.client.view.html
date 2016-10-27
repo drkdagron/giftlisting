@@ -9,12 +9,15 @@
             <a href="/app#!/event/join"><input type="button" class="btn btn-success" style="width:47%;height:40px;margin-top:5px;float:right;margin-left:1%;margin-right:2%" value="Join Event" /></a>   
         </div>
         <div ng-show="queries.length > 0">
-            <div ng-repeat="t in queries">
-                {{t.eventName}} - <input class="btn btn-primary" ng-click="goToEvent(t._id)" value="View">
+            <h5 style="margin-left:5%"><strong>Events:</strong></h5>
+            <div ng-repeat="t in queries" style="height:60px;margin-left:10%;margin-right:10%;margin-bottom:10px">
+                <strong>{{t.eventName}}</strong><br>
+                <input type="button" value="View" ng-click="goToEvent(t._id)" class="btn btn-primary" style="width:100%;margin-top:5px">
             </div>
         </div>
         <div ng-show="queries.length == 0">
             Your not in any events.
         </div>
+        <div style="margin-top:5px;height:50px;background-color:black"></div>
         
 </section>
